@@ -1,0 +1,109 @@
+# Pylinac Watcher Service Configuration File
+# See documentation here: http://pylinac.readthedocs.org/en/latest/watcher.html#configuration
+# Copy and edit this file to customize analysis
+# For each section's `analysis` group, the values correspond to the main class' `analyze()` keyword parameters.
+# The `failure` section is the criteria for sending "failure" emails
+# keywords are character sequences that must be in the file name to be considered of that analysis type
+
+
+general:
+  file-suffix: _analysis  # the suffix added to the .png and .txt file created after analysis
+  avoid-keywords:  # keywords in a file name that cause a skip of analysis
+    - .png
+    - .txt
+
+email:
+  enable-all: false  # set to true to send an email after every analysis
+  enable-failure: false  # set to true to only send an email after an analysis fails
+  sender: sender@gmail.com  # sender MUST be a Gmail account
+  sender-password: senderpassword
+  recipients:  # add as many recipients as desired
+    - recipient1@domain.com
+    - recipient2@domain.com
+  subject: Pylinac results  # subject line of the email
+
+logs:
+  keywords:  # keywords needed in the file name to trigger analysis
+    - .dlg
+    - .bin
+  analysis:  # analysis settings; see each module's analyze() method for parameter options
+    doseTA: 1
+    distTA: 1
+    threshold: 0.1
+    resolution: 0.1
+  failure:  # what constitutes a "failure" in analysis
+    gamma: 95
+    avg-rms: 0.05
+    max-rms: 0.5
+
+winston-lutz:
+  keywords:
+    - wl
+    - winston
+    - lutz
+  failure:
+    gantry-iso-size: 2
+    mean-cax-bb-distance: 2
+    max-cax-bb-distance: 2.5
+
+starshot:
+  keywords:
+    - star
+  analysis:
+    tolerance: 1
+    radius: 0.8
+    sid: 1000  # ignored for EPID images since SID is embedded; If using CR or film, set to the value your clinic does starshots at.
+  failure:
+    passed: false
+
+picketfence:
+  keywords:
+    - pf
+    - picket
+  analysis:
+    tolerance: 0.5
+    action_tolerance: 0.3
+    hdmlc: false
+  failure:
+    passed: false
+
+cbct:
+  keywords:
+    - cbct
+    - ct
+  analysis:
+    hu_tolerance: 40
+    scaling_tolerance: 1
+  failure:
+    hu-passed: false
+    uniformity-passed: false
+    geometry-passed: false
+    thickness-passed: false
+
+vmat:
+  keywords:
+    - vmat
+    - drgs
+    - drmlc
+    - mlcs
+  analysis:
+    tolerance: 1.5
+  failure:
+    passed: false
+
+leeds:
+  keywords:
+    - leed
+    - tor
+  analysis:
+    low_contrast_threshold: 0.005
+    hi_contrast_threshold: 0.4
+
+pipspro:
+  keywords:
+    - pips
+    - pro
+    - qc
+  analysis:
+    low_contrast_threshold: 0.005
+    hi_contrast_threshold: 0.4

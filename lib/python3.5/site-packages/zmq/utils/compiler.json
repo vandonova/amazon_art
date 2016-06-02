@@ -1,0 +1,17 @@
+{
+  "define_macros": [
+    [
+      "HAVE_SYS_UN_H",
+      1
+    ]
+  ],
+  "library_dirs": [],
+  "include_dirs": [
+    "bundled/zeromq/include",
+    "zmq/utils",
+    "zmq/backend/cython",
+    "zmq/devices"
+  ],
+  "runtime_library_dirs": [],
+  "libraries": []
+}
